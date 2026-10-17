@@ -1,0 +1,586 @@
+/* ==========================================================================
+   Wellness Pro: stylesheet
+   Direction: calm, water-themed. Lagoon teal is the brand colour; kelp green,
+   amber and rust each have one job (screen time, posture, warnings).
+   Light and dark follow the system setting.
+   Fonts: Bricolage Grotesque (headings and big numbers) + DM Sans (body).
+   Load them in client/index.html (see the setup notes). Fallbacks are set, so
+   the page still looks fine without them.
+   ========================================================================== */
+
+:root {
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* surfaces and text */
+  --bg: #e7f0f1;
+  --bg-top: #f4f9f8;
+  --card: #ffffff;
+  --ink: #0f2a33;
+  --muted: #52707a;
+  --line: #d2e0e2;
+
+  /* brand */
+  --primary: #0a7c8c;
+  --primary-hover: #086a78;
+  --on-primary: #ffffff;
+  --primary-soft: #dcf0f2;
+
+  /* signals */
+  --kelp: #4d7c0f;
+  --amber: #b7791f;
+  --amber-soft: #fbf0da;
+  --amber-line: #efd29a;
+  --rust: #c2410c;
+  --rust-ink: #9a3412;
+  --rust-soft: #fce9e1;
+
+  --focus: #e8a317;
+  --shadow: 0 1px 2px rgba(15, 42, 51, 0.05), 0 10px 28px -14px rgba(15, 42, 51, 0.18);
+
+  /* two radii on purpose: large for containers, smaller for controls */
+  --r-card: 20px;
+  --r-control: 12px;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a1d24;
+    --bg-top: #0e2730;
+    --card: #122f39;
+    --ink: #e5f1f2;
+    --muted: #93b0b8;
+    --line: #24454f;
+
+    --primary: #36b5c5;
+    --primary-hover: #52c4d3;
+    --on-primary: #05232a;
+    --primary-soft: #173f4a;
+
+    --kelp: #9ccc5b;
+    --amber: #e8b04a;
+    --amber-soft: #36290f;
+    --amber-line: #6b5121;
+    --rust: #ff8a5c;
+    --rust-ink: #ffb59a;
+    --rust-soft: #3d1f14;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ---------- base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image: linear-gradient(180deg, var(--bg-top), var(--bg) 420px);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+a {
+  color: var(--primary);
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- page layout ---------- */
+
+.shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 4rem;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  margin-bottom: 1.1rem;
+}
+
+.grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+}
+
+.grid.four {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  margin-bottom: 0;
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  position: relative;
+  min-width: 0; /* lets charts shrink inside grid cells */
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 1.3rem 1.4rem;
+  box-shadow: var(--shadow);
+}
+
+/* The three metric cards carry a colour dot that matches their chart:
+   water = lagoon, screen time = kelp, posture = amber */
+.grid:not(.two):not(.four) > .card > h2::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: var(--primary);
+  vertical-align: 0.08em;
+}
+
+.grid:not(.two):not(.four) > .card:nth-child(2) > h2::before {
+  background: var(--kelp);
+}
+
+.grid:not(.two):not(.four) > .card:nth-child(3) > h2::before {
+  background: var(--amber);
+}
+
+/* ---------- numbers and text ---------- */
+
+.big {
+  margin: 0.2rem 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.big span {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.big.warn {
+  color: var(--rust);
+}
+
+.muted {
+  margin: 0.35rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.center-note {
+  margin-top: 4rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ---------- water gauge: the quarters of your daily goal ---------- */
+
+.bar {
+  position: relative;
+  height: 14px;
+  margin-bottom: 1rem;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  overflow: hidden;
+}
+
+.bar > div {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), #2bb3c4);
+  transition: width 0.7s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent calc(25% - 2px),
+    var(--card) calc(25% - 2px),
+    var(--card) 25%
+  );
+}
+
+/* ---------- buttons ---------- */
+
+button {
+  min-height: 44px;
+  padding: 0.65rem 1.05rem;
+  font: inherit;
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--on-primary);
+  background: var(--primary);
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+button:hover {
+  background: var(--primary-hover);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+button.ghost {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line);
+}
+
+button.ghost:hover {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* quick-add chips (+150 ml, +250 ml, +500 ml) */
+.row button:not(.ghost) {
+  padding-inline: 1.15rem;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 999px;
+}
+
+.row button:not(.ghost):hover {
+  color: var(--on-primary);
+  background: var(--primary);
+}
+
+/* ---------- forms ---------- */
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  transition: border-color 0.15s;
+}
+
+input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+input:focus {
+  border-color: var(--primary);
+}
+
+.manual {
+  margin-top: 0.6rem;
+}
+
+.manual input {
+  width: 88px;
+}
+
+.goals {
+  box-shadow: none;
+}
+
+.goals h2 {
+  margin-bottom: 1rem;
+}
+
+.goals button {
+  margin-top: 1.1rem;
+}
+
+.goals .muted {
+  margin-left: 0.75rem;
+}
+
+/* ---------- reminders and errors ---------- */
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1.1rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--amber-soft);
+  border: 1px solid var(--amber-line);
+  border-left: 5px solid var(--amber);
+  border-radius: var(--r-control);
+  animation: banner-in 0.25s ease-out;
+}
+
+@keyframes banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.error {
+  margin: 0 0 1rem;
+  padding: 0.6rem 0.85rem;
+  color: var(--rust-ink);
+  background: var(--rust-soft);
+  border-left: 4px solid var(--rust);
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+
+/* ---------- screen-time breakdown and streaks ---------- */
+
+.sources {
+  margin: 0.4rem 0 0.8rem;
+  padding: 0;
+  list-style: none;
+}
+
+.sources li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.sources li:last-child {
+  border-bottom: 0;
+}
+
+.sources span {
+  color: var(--muted);
+}
+
+.sources strong {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---------- login and register ---------- */
+
+.auth {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 1.75rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+}
+
+.auth-card h1 {
+  font-size: 1.8rem;
+}
+
+.auth-card .error {
+  margin: 0;
+}
+
+.auth-card button {
+  margin-top: 0.25rem;
+}
+
+.auth-card .muted {
+  margin: 0;
+  text-align: center;
+}
+
+/* ---------- charts (Recharts renders SVG, so we theme it from here) ---------- */
+
+.recharts-text {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.recharts-cartesian-grid line {
+  stroke: var(--line);
+}
+
+.recharts-cartesian-axis-line,
+.recharts-cartesian-axis-tick-line {
+  stroke: var(--line);
+}
+
+.recharts-bar-rectangle path {
+  fill: var(--primary);
+}
+
+.recharts-line-curve {
+  stroke: var(--kelp);
+}
+
+.recharts-line-dot {
+  stroke: var(--kelp);
+  fill: var(--card);
+}
+
+.recharts-reference-line line {
+  stroke: var(--rust);
+}
+
+.recharts-tooltip-cursor {
+  fill: var(--primary-soft);
+  opacity: 0.6;
+}
+
+.recharts-default-tooltip {
+  color: var(--ink);
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.recharts-default-tooltip .recharts-tooltip-label,
+.recharts-default-tooltip .recharts-tooltip-item {
+  color: var(--ink) !important;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 560px) {
+  .shell {
+    padding: 1rem 1rem 3rem;
+  }
+
+  .top {
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    padding: 1.1rem;
+    border-radius: 16px;
+  }
+
+  .banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions button {
+    flex: 1;
+  }
+}
+
+/* ---------- respect reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
