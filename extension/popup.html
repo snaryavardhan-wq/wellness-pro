@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { width: 260px; margin: 0; padding: 14px; font-family: system-ui, sans-serif; color: #14302b; }
+      h3 { margin: 0 0 8px; }
+      input { width: 100%; box-sizing: border-box; padding: 7px; margin-bottom: 8px; border: 1px solid #d9e3df; border-radius: 6px; }
+      button { background: #0e7490; color: #fff; border: 0; border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+      .big { font-size: 1.8rem; font-weight: 600; margin: 4px 0; }
+      ul { padding-left: 18px; margin: 8px 0; }
+      #err { color: #991b1b; font-size: .85rem; }
+    </style>
+  </head>
+  <body>
+    <div id="login" hidden>
+      <h3>Sign in to Wellness</h3>
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
+      <button id="loginBtn">Sign in</button>
+      <p id="err"></p>
+    </div>
+    <div id="stats" hidden>
+      <h3>Active browsing today</h3>
+      <p class="big" id="mins">0h 0m</p>
+      <ul id="sites"></ul>
+      <button id="logout">Sign out</button>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

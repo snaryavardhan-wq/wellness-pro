@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Wellness Screen Time",
+  "version": "1.1.0",
+  "description": "Tracks active browsing time and sends the daily total to your Wellness dashboard.",
+  "permissions": ["alarms", "idle", "storage", "tabs", "notifications"],
+  "host_permissions": ["http://localhost:5000/*"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html" },
+  "icons": { "128": "icon.png" },
+  "content_scripts": [
+    { "matches": ["http://localhost:5173/*"], "js": ["content.js"], "run_at": "document_idle" }
+  ]
+}
