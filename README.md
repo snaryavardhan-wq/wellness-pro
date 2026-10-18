@@ -4,8 +4,7 @@ A full-stack digital wellness tracker. Log water, track screen time across your 
 
 [![CI](https://github.com/snaryavardhan-wq/wellness-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/snaryavardhan-wq/wellness-pro/actions)
 
-   **Live demo:** coming soon
-
+   **Live demo:** https://wellness-pro-xi.vercel.app &nbsp;|&nbsp; **API health:** https://wellness-pro-api.onrender.com/api/health
 ![Dashboard](docs/screenshot.png)
 
 ## Features

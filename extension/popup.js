@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api";
+const API = "https://wellness-pro-api.onrender.com/api";
 const $ = (id) => document.getElementById(id);
 const todayStr = () => new Intl.DateTimeFormat("en-CA").format(new Date());
 const fmt = (m) => `${Math.floor(m / 60)}h ${m % 60}m`;

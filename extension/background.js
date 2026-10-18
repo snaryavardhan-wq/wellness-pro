@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api"; // change to your deployed API (and add it to host_permissions)
+const API = "https://wellness-pro-api.onrender.com/api"; // change to your deployed API (and add it to host_permissions)
 const todayStr = () => new Intl.DateTimeFormat("en-CA").format(new Date());
 
 // A service worker gets suspended, so setInterval is unreliable. chrome.alarms wakes it up.
@@ -51,13 +51,14 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 // Receives the login token from the Wellness page (content.js)
 chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg.type !== "token") return;
-  if (!sender.url?.startsWith("http://localhost:5173")) return; // only trust our own site
+const ALLOWED = ["http://localhost:5173", "https://wellness-pro-xi.vercel.app"];
+if (!ALLOWED.some((o) => sender.url?.startsWith(o))) return; // only trust our own sites
   if (msg.token) chrome.storage.local.set({ token: msg.token });
   else chrome.storage.local.remove("token"); // logged out on the website
 });
 
 // ---------- Reminders (desktop notifications) ----------
-const DASHBOARD_URL = "http://localhost:5173"; // change to your Vercel URL when you deploy
+const DASHBOARD_URL = "https://wellness-pro-xi.vercel.app";
 
 // fetch helper that adds the login token (and forgets it if the server rejects it)
 async function authed(path, options = {}) {
